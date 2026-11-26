@@ -13,8 +13,11 @@
     </div>
 {{/if}}
 
-<form action="/books/{{libro.id}}?_method=PUT" method="POST" class="card card-body shadow-sm">
-
+<form
+    action="/books/{{libro.id}}?_method=PUT"
+    method="POST"
+    class="card card-body shadow-sm"
+>
     <div class="mb-3">
         <label for="title" class="form-label">Título del libro</label>
         <input
@@ -28,7 +31,9 @@
     </div>
 
     <div class="mb-3">
-        <label for="publicationYear" class="form-label">Año de publicación</label>
+        <label for="publicationYear" class="form-label">
+            Año de publicación
+        </label>
         <input
             type="number"
             id="publicationYear"
@@ -48,16 +53,19 @@
             class="form-control"
             value="{{libro.coverUrl}}"
         >
-        <small class="text-muted">Este campo es opcional al editar.</small>
+        <small class="text-muted">
+            Puedes conservar la portada actual o introducir otra URL.
+        </small>
     </div>
 
     <div class="mb-3">
         <label for="categoryId" class="form-label">Categoría</label>
         <select id="categoryId" name="categoryId" class="form-select" required>
+            <option value="{{libro.categoryId}}" selected>
+                {{libro.Category.name}}
+            </option>
             {{#each categorias}}
-                <option value="{{this.id}}" {{#if (eq this.id ../libro.categoryId)}}selected{{/if}}>
-                    {{this.name}}
-                </option>
+                <option value="{{this.id}}">{{this.name}}</option>
             {{/each}}
         </select>
     </div>
@@ -65,10 +73,11 @@
     <div class="mb-3">
         <label for="authorId" class="form-label">Autor</label>
         <select id="authorId" name="authorId" class="form-select" required>
+            <option value="{{libro.authorId}}" selected>
+                {{libro.Author.name}}
+            </option>
             {{#each autores}}
-                <option value="{{this.id}}" {{#if (eq this.id ../libro.authorId)}}selected{{/if}}>
-                    {{this.name}}
-                </option>
+                <option value="{{this.id}}">{{this.name}}</option>
             {{/each}}
         </select>
     </div>
@@ -76,15 +85,22 @@
     <div class="mb-3">
         <label for="publisherId" class="form-label">Editorial</label>
         <select id="publisherId" name="publisherId" class="form-select" required>
+            <option value="{{libro.publisherId}}" selected>
+                {{libro.Publisher.name}}
+            </option>
             {{#each editoriales}}
-                <option value="{{this.id}}" {{#if (eq this.id ../libro.publisherId)}}selected{{/if}}>
-                    {{this.name}}
-                </option>
+                <option value="{{this.id}}">{{this.name}}</option>
             {{/each}}
         </select>
     </div>
 
-    <button type="submit" class="btn btn-primary">
-        Actualizar libro
-    </button>
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">
+            Guardar cambios
+        </button>
+
+        <a href="/books/manage" class="btn btn-secondary">
+            Cancelar
+        </a>
+    </div>
 </form>
