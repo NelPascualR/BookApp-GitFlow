@@ -54,14 +54,24 @@ async function store(req, res) {
             publisherId
         } = req.body;
 
-        if (!title || !publicationYear || !coverUrl ||
-            !categoryId || !authorId || !publisherId) {
-            return res.status(400).send('Completa todos los campos obligatorios.');
+        if (!title || !title.trim() || !publicationYear ||
+            !coverUrl || !categoryId || !authorId || !publisherId) {
+            return res.status(400).send(
+                'Completa todos los campos obligatorios.'
+            );
+        }
+
+        const anio = Number(publicationYear);
+
+        if (!Number.isInteger(anio) || anio <= 0) {
+            return res.status(400).send(
+                'El año de publicación debe ser un número entero positivo.'
+            );
         }
 
         await crearLibro({
-            title,
-            publicationYear: Number(publicationYear),
+            title: title.trim(),
+            publicationYear: anio,
             coverUrl,
             categoryId,
             authorId,
@@ -110,9 +120,19 @@ async function update(req, res) {
             publisherId
         } = req.body;
 
-        if (!title || !publicationYear || !categoryId ||
-            !authorId || !publisherId) {
-            return res.status(400).send('Completa todos los campos obligatorios.');
+        if (!title || !title.trim() || !publicationYear ||
+            !categoryId || !authorId || !publisherId) {
+            return res.status(400).send(
+                'Completa todos los campos obligatorios.'
+            );
+        }
+
+        const anio = Number(publicationYear);
+
+        if (!Number.isInteger(anio) || anio <= 0) {
+            return res.status(400).send(
+                'El año de publicación debe ser un número entero positivo.'
+            );
         }
 
         const libroExistente = await obtenerLibroPorId(req.params.id);
@@ -121,9 +141,9 @@ async function update(req, res) {
             return res.status(404).send('Libro no encontrado.');
         }
 
-        const libro = await actualizarLibro(req.params.id, {
-            title,
-            publicationYear: Number(publicationYear),
+        await actualizarLibro(req.params.id, {
+            title: title.trim(),
+            publicationYear: anio,
             coverUrl: coverUrl || libroExistente.coverUrl,
             categoryId,
             authorId,
