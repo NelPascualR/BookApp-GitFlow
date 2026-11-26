@@ -1,0 +1,69 @@
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1>Administrar libros</h1>
+        <p class="text-muted">Gestiona los libros registrados en BookApp.</p>
+    </div>
+
+    <a href="/books/create" class="btn btn-primary">
+        + Agregar libro
+    </a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Título</th>
+                        <th>Año</th>
+                        <th>Categoría</th>
+                        <th>Autor</th>
+                        <th>Editorial</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {{#each libros}}
+                        <tr>
+                            <td>{{this.title}}</td>
+                            <td>{{this.publicationYear}}</td>
+                            <td>{{this.Category.name}}</td>
+                            <td>{{this.Author.name}}</td>
+                            <td>{{this.Publisher.name}}</td>
+
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <a
+                                        href="/books/{{this.id}}/edit"
+                                        class="btn btn-warning btn-sm"
+                                    >
+                                        Editar
+                                    </a>
+
+                                    <form
+                                        action="/books/{{this.id}}?_method=DELETE"
+                                        method="POST"
+                                        onsubmit="return confirm('¿Estás seguro de eliminar este libro?');"
+                                    >
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {{else}}
+                        <tr>
+                            <td colspan="6" class="text-center">
+                                No hay libros registrados.
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

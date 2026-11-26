@@ -1,0 +1,45 @@
+
+<div class="mb-4">
+    <a href="/authors" class="btn btn-outline-secondary">
+        ← Volver a autores
+    </a>
+</div>
+
+<h1 class="mb-4">Editar autor</h1>
+
+{{#if error}}
+    <div class="alert alert-danger">
+        {{error}}
+    </div>
+{{/if}}
+
+<form action="/authors/{{autor.id}}?_method=PUT" method="POST" class="card card-body shadow-sm">
+
+    <div class="mb-3">
+        <label for="name" class="form-label">Nombre del autor</label>
+        <input
+            type="text"
+            id="name"
+            name="name"
+            class="form-control"
+            value="{{autor.name}}"
+            required
+        >
+    </div>
+
+    <div class="mb-3">
+        <label for="email" class="form-label">Correo electrónico</label>
+        <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+            value="{{autor.email}}"
+            required
+        >
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Actualizar autor
+    </button>
+</form>

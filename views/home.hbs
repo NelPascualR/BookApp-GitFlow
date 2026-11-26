@@ -1,0 +1,107 @@
+
+<section class="mb-4">
+    <div class="p-4 bg-primary text-white rounded-3">
+        <h1 class="fw-bold">Bienvenido a BookApp</h1>
+        <p class="mb-0">
+            Explora nuestra colección de libros y descubre nuevas lecturas.
+        </p>
+    </div>
+</section>
+
+<section class="mb-4">
+    <h2 class="mb-3">Buscar libros</h2>
+
+    <form action="/" method="GET" class="card card-body">
+        <div class="mb-3">
+            <label for="search" class="form-label">Título del libro</label>
+            <input
+                type="text"
+                id="search"
+                name="search"
+                class="form-control"
+                placeholder="Escribe el título..."
+                value="{{busqueda}}"
+            >
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Filtrar por categoría</label>
+
+            <div class="d-flex flex-wrap gap-3">
+                {{#each categorias}}
+                    <div class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="checkbox"
+                            name="categories"
+                            value="{{this.id}}"
+                            id="categoria{{this.id}}"
+                            {{#if (includes ../categoriasSeleccionadas this.id)}}checked{{/if}}
+                        >
+                        <label class="form-check-label" for="categoria{{this.id}}">
+                            {{this.name}}
+                        </label>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">
+                Buscar
+            </button>
+
+            <a href="/" class="btn btn-outline-secondary">
+                Limpiar filtros
+            </a>
+        </div>
+    </form>
+</section>
+
+<section>
+    <h2 class="mb-3">Nuestra colección</h2>
+
+    <div class="row g-4">
+        {{#each libros}}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
+                    <img
+                        src="{{this.coverUrl}}"
+                        class="card-img-top book-cover"
+                        alt="Portada de {{this.title}}"
+                    >
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{this.title}}</h5>
+
+                        <p class="mb-1">
+                            <strong>Año:</strong> {{this.publicationYear}}
+                        </p>
+
+                        <p class="mb-1">
+                            <strong>Categoría:</strong> {{this.Category.name}}
+                        </p>
+
+                        <p class="mb-1">
+                            <strong>Autor:</strong> {{this.Author.name}}
+                        </p>
+
+                        <p class="mb-3">
+                            <strong>Editorial:</strong> {{this.Publisher.name}}
+                        </p>
+
+                        <a href="/books/{{this.id}}" class="btn btn-primary">
+                            Ver detalles
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {{else}}
+            <div class="col-12">
+                <div class="alert alert-info">
+                    No se encontraron libros.
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</section>

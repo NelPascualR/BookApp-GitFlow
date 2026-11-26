@@ -1,0 +1,44 @@
+
+<div class="mb-4">
+    <a href="/categories" class="btn btn-outline-secondary">
+        ← Volver a categorías
+    </a>
+</div>
+
+<h1 class="mb-4">Editar categoría</h1>
+
+{{#if error}}
+    <div class="alert alert-danger">
+        {{error}}
+    </div>
+{{/if}}
+
+<form action="/categories/{{categoria.id}}?_method=PUT" method="POST" class="card card-body shadow-sm">
+
+    <div class="mb-3">
+        <label for="name" class="form-label">Nombre de la categoría</label>
+        <input
+            type="text"
+            id="name"
+            name="name"
+            class="form-control"
+            value="{{categoria.name}}"
+            required
+        >
+    </div>
+
+    <div class="mb-3">
+        <label for="description" class="form-label">Descripción</label>
+        <textarea
+            id="description"
+            name="description"
+            class="form-control"
+            rows="4"
+            required
+        >{{categoria.description}}</textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Actualizar categoría
+    </button>
+</form>

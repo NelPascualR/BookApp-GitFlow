@@ -1,0 +1,67 @@
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1>Administrar editoriales</h1>
+        <p class="text-muted">Gestiona las editoriales registradas.</p>
+    </div>
+
+    <a href="/publishers/create" class="btn btn-primary">
+        + Agregar editorial
+    </a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Teléfono</th>
+                        <th>País</th>
+                        <th>Cantidad de libros</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {{#each editoriales}}
+                        <tr>
+                            <td>{{this.name}}</td>
+                            <td>{{this.phone}}</td>
+                            <td>{{this.country}}</td>
+                            <td>{{this.Books.length}}</td>
+
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <a
+                                        href="/publishers/{{this.id}}/edit"
+                                        class="btn btn-warning btn-sm"
+                                    >
+                                        Editar
+                                    </a>
+
+                                    <form
+                                        action="/publishers/{{this.id}}?_method=DELETE"
+                                        method="POST"
+                                        onsubmit="return confirm('¿Estás seguro de eliminar esta editorial?');"
+                                    >
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    {{else}}
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                No hay editoriales registradas.
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
