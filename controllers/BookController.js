@@ -13,7 +13,10 @@ async function index(req, res) {
     try {
         const libros = await obtenerTodosLosLibros();
 
-        res.render('books/index', { libros });
+        res.render('books/index', {
+            libros,
+            totalLibros: libros.length
+        });
     } catch (error) {
         console.error(error);
         res.status(500).send('Error al consultar los libros.');
@@ -28,7 +31,7 @@ async function create(req, res) {
 
         if (!categorias.length || !autores.length || !editoriales.length) {
             return res.status(400).send(
-                'No se puede crear un libro. Debes registrar categorías, autores y editoriales primero.'
+                'No se puede crear un libro. Debes registrar categorias, autores y editoriales primero.'
             );
         }
 
@@ -65,7 +68,7 @@ async function store(req, res) {
 
         if (!Number.isInteger(anio) || anio <= 0) {
             return res.status(400).send(
-                'El año de publicación debe ser un número entero positivo.'
+                'El año de publicacion debe ser un numero entero positivo.'
             );
         }
 
@@ -105,7 +108,7 @@ async function edit(req, res) {
         });
     } catch (error) {
         console.error(error);
-        res.status(500).send('Error al preparar la edición.');
+        res.status(500).send('Error al preparar la edicion.');
     }
 }
 
@@ -131,7 +134,7 @@ async function update(req, res) {
 
         if (!Number.isInteger(anio) || anio <= 0) {
             return res.status(400).send(
-                'El año de publicación debe ser un número entero positivo.'
+                'El año de publicacion debe ser un numero entero positivo.'
             );
         }
 
