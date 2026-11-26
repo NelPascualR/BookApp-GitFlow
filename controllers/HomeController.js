@@ -14,8 +14,8 @@ async function index(req, res) {
 
         const categorias = await obtenerTodasLasCategorias();
 
-        // Obtener los datos enviados desde el formulario.
-        const busqueda = (req.query.search || '').trim();
+        // Obtener el texto de búsqueda.
+        const busqueda = (req.query.search || '').trim().toLowerCase();
 
         const categoriasSeleccionadas = req.query.categories || [];
 
@@ -24,14 +24,22 @@ async function index(req, res) {
             ? categoriasSeleccionadas
             : [categoriasSeleccionadas];
 
-        // Filtrar libros por título.
+        // Filtrar por título, autor o categoría.
         if (busqueda) {
-            libros = libros.filter(libro =>
-                libro.title.toLowerCase().includes(busqueda.toLowerCase())
-            );
+            libros = libros.filter(libro => {
+                const titulo = (libro.title || '').toLowerCase();
+                const autor = (libro.Author?.name || '').toLowerCase();
+                const categoria = (libro.Category?.name || '').toLowerCase();
+
+                return (
+                    titulo.includes(busqueda) ||
+                    autor.includes(busqueda) ||
+                    categoria.includes(busqueda)
+                );
+            });
         }
 
-        // Filtrar libros por categorías.
+        // Filtrar libros por categorías seleccionadas.
         if (seleccionadas.length > 0) {
             libros = libros.filter(libro =>
                 seleccionadas.includes(String(libro.categoryId))
@@ -42,7 +50,7 @@ async function index(req, res) {
         res.render('home', {
             libros,
             categorias,
-            busqueda,
+            busqueda: req.query.search || '',
             categoriasSeleccionadas: seleccionadas
         });
 
